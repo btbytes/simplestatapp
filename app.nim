@@ -23,7 +23,7 @@ proc getStudents(): string =
     for cell in row:
       result.add("<td>" & cell & "</td>")
     result.add("</tr>")
-  result.add("</table></body></html")
+  result.add("</table></body></html>")
 
   return result
 
