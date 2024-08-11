@@ -1,6 +1,8 @@
 import prologue
 import db_connector/db_sqlite
 import strutils
+import std/[os]
+import markdown
 
 proc getStudents(): string =
   let db = open("students.db", "", "", "")
@@ -8,7 +10,14 @@ proc getStudents(): string =
 
   let rows = db.getAllRows(sql"SELECT * FROM users")
 
-  var result = "<!doctype html><head><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/water.css@2/out/water.css></head><body><table border='1'><tr><th>ID</th><th>Name</th><th>Age</th><th>Class</th></tr>"
+  var result = """<!doctype html>
+  <head><title>simple static app</title>
+    <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/water.css@2/out/water.css>
+  </head>
+  <body>"""
+  var readme = readFile("README.md")
+  result.add(markdown(readme))
+  result.add("<table border='1'><tr><th>ID</th><th>Name</th><th>Age</th><th>Class</th></tr>")
   for row in rows:
     result.add("<tr>")
     for cell in row:
@@ -20,7 +29,7 @@ proc getStudents(): string =
 
 proc hello(ctx: Context) {.async.} =
   let students = getStudents()
-  resp "<h1>Student Records</h1>" & students
+  resp students
 
 let app = newApp()
 app.get("/", hello)
