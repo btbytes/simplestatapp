@@ -1,7 +1,6 @@
 import prologue
 import db_connector/db_sqlite
 import strutils
-import std/[os]
 import markdown
 
 proc getStudents(): string =

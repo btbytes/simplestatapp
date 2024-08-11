@@ -14,8 +14,8 @@ switch("define", "nimDebugDlOpen")
 # OS-specific configuration
 when defined(linux):
   # Static PIE configuration for Linux
-  switch("passC", "-fPIC -static-pie -O3")
-  switch("passL", "-fPIC -static-pie -O3")
+  switch("passC", "-fno-pie -fno-pic -O3")
+  switch("passL", "-no-pie -static -O3")
 
   # Static libraries
   switch("passL", "/usr/lib/x86_64-linux-gnu/libpcre32.a")

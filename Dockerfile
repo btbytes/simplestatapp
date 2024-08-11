@@ -1,7 +1,18 @@
 FROM nimlang/nim:latest AS builder
 
+ENV DEBIAN_FRONTEND=noninteractive
+
+# we install the latest gcc
+# so that we can have better PIE experience
 RUN apt-get update && apt-get install -y \
-    libssl-dev libpcre3-dev libsqlite3-dev\
+    software-properties-common \
+    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get install -y gcc-11 g++-11 libssl-dev libpcre3-dev libsqlite3-dev \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 110 \
+    --slave /usr/bin/g++ g++ /usr/bin/g++-11 \
+    --slave /usr/bin/gcov gcov /usr/bin/gcov-11 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
