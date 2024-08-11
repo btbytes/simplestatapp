@@ -39,4 +39,7 @@ You can see also see the image size during this [fly.io](//fly.io) deployment.
 The code for this application is at <https://github.com/btbytes/simplestatapp/>, and hosted on
 fly.io - <https://simplestatapp.fly.dev/>
 
+If you are curious about all the things that get added, built, and copied, you can inspect the `Dockerfile`
+or take a look at the actual docker build [with github actions](https://github.com/btbytes/simplestatapp/actions/runs/10336115562/job/28611490435).
+
 And without much ado, the table:
