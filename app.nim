@@ -24,7 +24,6 @@ proc getStudents(): string =
     result.add("</tr>")
   result.add("</table></body></html>")
 
-  return result
 
 proc hello(ctx: Context) {.async.} =
   let students = getStudents()
