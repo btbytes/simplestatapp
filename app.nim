@@ -9,7 +9,7 @@ proc getStudents(): string =
 
   let rows = db.getAllRows(sql"SELECT * FROM users")
 
-  var result = """<!doctype html>
+  result = """<!doctype html>
   <head><title>simple static app</title>
     <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/water.css@2/out/water.css>
   </head>

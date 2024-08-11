@@ -1,32 +1,36 @@
 # config.nims
+import std/strutils
 
-# Use GCC as the C compiler
-switch("cc", "gcc")
-switch("gcc.exe", "gcc")
-switch("gcc.linkerexe", "gcc")
+# Determine the architecture
+const arch = staticExec("uname -m").strip()
 
-# Release mode
-switch("define", "release")
+# Set the appropriate library path based on architecture
+const libPath =
+  case arch
+  of "x86_64": "/usr/lib/x86_64-linux-gnu/libm.a"
+  of "aarch64": "/usr/lib/aarch64-linux-gnu/libm.a"
+  of "armv7l": "/usr/lib/arm-linux-gnueabihf/libm.a"
+  else: "/usr/lib/libm.a"  # fallback path
 
-# Debug DL open
-switch("define", "nimDebugDlOpen")
-
-# OS-specific configuration
 when defined(linux):
+  switch("cc", "gcc")
+  switch("define", "release")
+  switch("define", "nimDebugDlOpen")
+  # Ensure we're using static versions of libraries
+  switch("passL", "-static-libgcc")
   # Static PIE configuration for Linux
-  switch("passC", "-fPIC -no-pie -O3")
-  switch("passL", "-fPIC -no-pie -O3")
-
-  # Static libraries
-  switch("passL", "/usr/lib/x86_64-linux-gnu/libpcre32.a")
-  switch("passL", "/usr/lib/x86_64-linux-gnu/libsqlite3.a")
-
+  switch("passC", "-fPIC -static-pie -O3")
+  switch("passL", "-fPIC -static-pie -O3")
+  # Static libraries (Alpine specific paths)
+  switch("passL", "/usr/local/lib/libpcre.a")
+  switch("passL", "/usr/local/lib/libsqlite3.a")
+  # Use the determined library path
+  switch("passL", libPath)
   # Dynamic library overrides
   switch("dynlibOverride", "pcre")
   switch("dynlibOverride", "sqlite3")
-
   # Additional linker flags
-  switch("passL", "-static -lm -lpcre -lsqlite3")
+  switch("passL", "-static -lm")
 else:
   # Configuration for non-Linux systems
   switch("passC", "-O3")
