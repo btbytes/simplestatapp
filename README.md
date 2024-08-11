@@ -3,7 +3,7 @@
 This is an illustrative example of how to build statically linked nim application
 that produce very small single exeuctables (in the order of few MBs).
 
-This application uses [Nim Language](//nim-lan.org), which compiles down to C, and subsequently to
+This application uses [Nim Language](//nim-lang.org), which compiles down to C, and subsequently to
 a small, performant, standalone binary.
 
 This simple web application uses the [Prologue](https://planety.github.io/prologue/) web framework
