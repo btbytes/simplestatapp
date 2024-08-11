@@ -10,15 +10,7 @@ RUN nimble install -y --depsOnly
 WORKDIR /app
 COPY . .
 
-# Compile the application
-RUN nim c -d:release --opt:size -d:nimDebugDlOpen \
-    --passC:"-fPIC -pie -O3" \
-    --passL:"-fPIC -pie -O3" \
-    --passL:/usr/lib/x86_64-linux-gnu/libpcre32.a \
-    --passL:/usr/lib/x86_64-linux-gnu/libsqlite3.a \
-    --dynlibOverride:pcre \
-    --dynlibOverride:sqlite3 \
-    --passL:"-static -lm -lpcre -lsqlite3 " app.nim
+RUN nimble build
 
 FROM scratch
 COPY --from=builder /app/app /app
