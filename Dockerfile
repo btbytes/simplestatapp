@@ -12,6 +12,7 @@ COPY . .
 
 # Compile the application
 RUN nim c -d:release --opt:size -d:nimDebugDlOpen \
+    --passC:"-fPIC -pie" \
     --passL:/usr/lib/x86_64-linux-gnu/libpcre32.a \
     --passL:/usr/lib/x86_64-linux-gnu/libsqlite3.a \
     --dynlibOverride:pcre \
