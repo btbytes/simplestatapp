@@ -40,6 +40,6 @@ The code for this application is at <https://github.com/btbytes/simplestatapp/>,
 fly.io - <https://simplestatapp.fly.dev/>
 
 If you are curious about all the things that get added, built, and copied, you can inspect the `Dockerfile`
-or take a look at the actual docker build [with github actions](https://github.com/btbytes/simplestatapp/actions/runs/10336115562/job/28611490435).
+or take a look at the actual docker build [with github actions](https://github.com/btbytes/simplestatapp/blob/main/.github/workflows/fly-deploy.yml).
 
 And without much ado, the table:
